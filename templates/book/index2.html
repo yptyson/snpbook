@@ -1,0 +1,52 @@
+{% extends "base.html"%}
+{% load pagination_tags %} 
+{% block list %}
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">图书借阅</li>              
+              <li ><a href="/book/book_list/">图书</a></li>              
+              <li ><a href="/book/show_return_books/">归还列表</a></li>
+			  <li class="active"><a href="/book/list_return_book/">归还历史</a></li>
+			  <li><a href="/book/create_book/">新书录入</a></li>					  
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock%}
+
+
+{% block content %}
+<div class="span9">
+          <div class="hero-unit">
+<table class="table table-striped">
+<tr><th>书名</th><th>读者</th><th>分享状态</th><th>借阅日期</th><th>归还日期</th><th>借阅时长</th></tr>
+{% autopaginate books 10 %}
+{% for book in books %}
+<tr>
+    <td>{{ book.book.name }}</td>
+    <td>{{ book.user.first_name }}</td>
+		<td align=center>{% ifequal book.share_status 1 %}
+			未分享 </td>
+		 {% else %} 
+			 {% ifequal book.share_status 2%}
+				 分享完 </td>
+				 {% else %}
+				 {% ifequal book.share_status 0 %}
+				   ---</td>
+				 {% endifequal %}
+			 {% endifequal %}
+		 {% endifequal %}
+		     
+    <td>{{ book.borrow_time|date:"Y-m-d" }}</td>
+    <td>{{ book.return_time|date:"Y-m-d" }}</td>
+    <td>{{ book.get_borrow_period }}天</td>
+</tr>
+{% endfor %}
+
+</table>
+{% paginate %}
+</div>
+</div>
+{% endblock%}

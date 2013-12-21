@@ -1,0 +1,59 @@
+{% extends "base.html"%}
+
+
+{% block list %}
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">图书借阅</li>              
+              <li ><a href="/book/book_list/">图书</a></li>              
+              <li ><a href="/book/show_return_books/">归还列表</a></li>
+			  <li ><a href="/book/list_return_book/">归还历史</a></li>
+			  <li class="active"><a href="/book/create_book/">新书录入</a></li>					  
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock%}
+
+
+
+{% block content %}
+<form class="form-horizontal" action="/book/create_one/" method="post" >
+  <fieldset>
+    <legend>新书录入</legend>
+    <div class="control-group">		 
+      <label class="control-label" >书名</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="name" name="name">        
+      </div>
+      <br>      
+      <label class="control-label" >作者</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="writer" name="writer">        
+      </div>      
+      <br>
+      <label class="control-label" >分享</label>
+      <div class="controls">
+        <!-- <input type="text" class="input-xlarge" id="share" name="share">    -->
+        <select class="span2" name="share">
+            <option value ="1">可分享</option>
+            <option value ="0">不可分享</option>
+        </select>    
+        
+      </div>
+      <br>
+      <br>
+      <div class="controls">        
+        <input class="btn btn-primary" type="submit" value="提交">
+      </div>    
+    </div>
+  </fieldset>
+</form>
+
+
+
+    
+
+{% endblock%}

@@ -1,0 +1,55 @@
+{% extends "base.html"%}
+{% load pagination_tags %} 
+{% block list %}
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">图书借阅</li>              
+              <li ><a href="/book/book_list/">图书</a></li>              
+              <li class="active"><a href="/book/show_return_books/">归还列表</a></li>
+			  <li><a href="/book/list_return_book/">归还历史</a></li>
+			  <li><a href="/book/create_book/">新书录入</a></li>					  
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock%}
+
+
+
+{% block content %}
+
+	<div class="span9">
+			  <div class="hero-unit">
+					<table class="table table-striped">
+						<tr><th>no</th><th>书名</th><th>分享</th><th>读者</th><th>借阅时间</th><th>return</th></tr>
+						
+						{% autopaginate borrowed_books 10 %}
+						{% for book in borrowed_books %}
+						<tr>		
+							<td> {{ forloop.counter }} </td>
+							<td> {{ book.book.name }} </td>
+							<td> {% ifequal book.share_status 1 %}
+									  <a href="/book/confirm_share?borrow_id={{book.id}}">未分享</a>
+								 {% else %} 
+									{% ifequal book.share_status 2%}
+										分享完 
+									{% endifequal %}
+								 {% endifequal %}   		         
+							 </td>
+							<td> {{ book.user.first_name }} </td>
+							<td>还剩 <font color='red'>{{ book.get_keep_period }}</font>天</td>
+							<td><a    class="btn btn-primary" href="/book/back_book/?bookid={{ book.id }}">归还</a>
+							     </td>
+						</tr>  
+					   {% endfor %}
+						
+					</table>
+					{% paginate %}
+			</div>
+	 </div>
+{% endblock%}
+
+
+

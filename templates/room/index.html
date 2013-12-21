@@ -1,0 +1,42 @@
+{% extends "base.html"%}
+
+
+
+
+{% block content %}
+ 
+<table width=90% >
+	<tr>
+{% for i in rooms %}
+		<!--<td valign='top' style ="padding-left:20"%>-->
+		<!--<td valign='top' style="padding: 0.5cm 2.5cm">-->
+			<td valign='top' style="padding: 20px 30px">
+				
+			<h3 align='middle'><a href="/room/room_detail?date={{ i.date|date:"Y-m-d" }}">{{ i.date|date:"Y-m-d" }}
+			{% ifequal forloop.counter 1%}(今天){% endifequal%}
+			{% ifequal forloop.counter 2%}(明天){% endifequal%}
+			{% ifequal forloop.counter 3%}(后天){% endifequal%}
+			{% ifequal forloop.counter 4%}(大后天){% endifequal%}			
+			</a></h3>
+		<table class="table table-striped" width=50 >       
+		<tr ><th>预订时间</th><th>订阅人</th><th>会议名称</th><th>会议人数</th></tr>
+		{% for booking in i.bookings %}
+			<tr>
+			<td>{{ booking.start_time|time:"H:i" }}~{{ booking.end_time|time:"H:i" }} </td>
+			<td>{{ booking.book_man }}</td>
+			<td>{{ booking.title }}</td>
+			<td>{{ booking.people_num}}</td>
+			</tr> 
+		{% endfor %}
+		</table>
+		
+		
+		
+		</td>
+		{% ifequal forloop.counter  3 %}   
+		</tr><tr>
+		{% endifequal %}
+{% endfor %}
+</tr>
+</table>
+{% endblock%}

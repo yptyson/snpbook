@@ -1,0 +1,75 @@
+{% extends "base.html"%}
+
+
+{% block list %}
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header"><h5>预订会议室</h5></li>                            
+             <li > {% for room in rooms %}
+                  <h4><a href="/room/room_detail/?date={{ room.date|date:'Y-m-d' }}">{{ room.date|date:"Y-m-d" }}</a></h4>
+                  {% endfor %}</li>                
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock%}
+
+
+
+{% block content %}
+<div class="span9">
+          <div class="hero-unit">
+<table class="table table-striped">
+<form action="/room/room_detail/" method="post">   
+      <table >
+        <tr> <td>时间</td><td>
+			<input type="hidden" name="date" id="date" value= {{date}} />
+        <input style="width:80px" type="text" id="starttime" class="Wdate"  
+        onclick="WdatePicker({qsEnabled:'False', dateFmt:'H:mm',minDate:'9:30:00',maxDate:'17:30:00'})" readonly="true" name="starttime" >
+        ~~
+        <input style="width:80px" type="text" id="endtime" class="Wdate"  
+        onclick="WdatePicker({dateFmt:'H:mm',minDate:'9:30:00',maxDate:'17:30:00',quickSel:[]})" readonly="true" name="endtime" >
+          </td>
+         </tr>
+        <tr> <td>title</td><td><input  style="width:80px" type="text" id="title" name="title" /></td></tr>
+        <tr> <td>人数</td><td><input  style="width:80px" type="text" id="people_num" name="people_num" /></td></tr>
+        <td>
+        <input class="btn btn-primary" type="submit" value="提交">
+        </td><td></td>
+      </table>  
+</form>        
+
+
+
+<div align='middle'>
+ <h2 style="color:steelblue">{{ date }}</h2>
+</div>
+
+
+
+<table class="table table-striped" >
+	<tr><th style="background:	#C7C7E2" >预订时间</th>
+	<th style="background:	#C7C7E2">订阅人</th>
+	<th style="background:	#C7C7E2">会议名称</th>
+	<th style="background:	#C7C7E2">会议人数</th>
+	<th style="background:	#C7C7E2">&nbsp;</th></tr>
+{% for i in booktime %}
+<form action="/room/delete_booking/" method="post" id={{forloop.counter}} name={{forloop.counter}} > 
+    <tr ><input  type="hidden" name="date" id="date" value= {{date}} />
+    
+    <input type="hidden" name="booking_id" id="booking_id" value= {{ i.id}} />
+		<td style="background:bisque">{{ i.start_time|time:"H:i" }}~{{ i.end_time|time:"H:i" }}</td>
+		<td style="background:bisque">{{ i.book_man }}</td>
+		<td style="background:bisque">{{ i.title }}</td>
+		<td style="background:bisque">{{ i.people_num}}</td>
+		<td style="background:bisque"><input  class="btn btn-danger" type="submit" value="删除"></td>
+	</tr> 
+</form>
+{% endfor %}
+</table>
+</div>
+</div>
+
+{% endblock%}

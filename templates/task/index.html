@@ -1,0 +1,49 @@
+{% extends "base.html"%}
+
+{% block list %}
+
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">任务</li>              
+              <li class="active"><a href="/task/index/">新鲜任务</a></li>              
+              <li><a href="/task/show_soved_task/">已解决任务</a></li>
+			  <li><a href="/task/create_task/">创建任务</a></li>
+			  <li><a href="/task/month_winner/">月冠军</a></li>					  
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock%}
+
+{% block content %}
+
+<div class="span9">
+          <div class="hero-unit">
+<table class="table table-striped" >
+	<tr><th style="background:	#C7C7E2" >提问人</th>
+	<th style="background:	#C7C7E2">任务题目</th>
+	<th style="background:	#C7C7E2">创建时间</th>
+	<th style="background:	#C7C7E2">奖励分数</th>
+	<th style="background:	#C7C7E2">&nbsp;</th></tr>
+{% for item in tasks %}
+<form action="/room/delete_booking/" method="post" id={{forloop.counter}} name={{forloop.counter}} > 
+    <tr >
+    <input type="hidden" name="booking_id" id="booking_id" value= {{ item.id}} />
+    <td style="background:bisque">{{ item.creator}}</td>
+		<td style="background:bisque">{{ item.task_title}}</td>
+		<td style="background:bisque">{{ item.create_time }}</td>
+		<td style="background:bisque">{{ item.point }}</td>
+		<td style="background:bisque"><a href="/task/show_detail_task?task_id={{item.id}}">查看详细</a><!--<input  class="btn btn-danger" type="submit" value="查看">--></td>
+	</tr> 
+</form>
+{% endfor %}
+</table>
+</div>
+</div>
+
+
+
+
+{% endblock%}

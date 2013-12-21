@@ -1,0 +1,39 @@
+{% extends "base.html"%}
+
+{% block list %}
+
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">任务</li>              
+              <li class="active"><a href="/task/index/">新鲜任务</a></li>              
+              <li><a href="/task/show_soved_task/">已解决任务</a></li>
+			  <li><a href="/task/create_task/">创建任务</a></li>
+			  <li><a href="/task/month_winner/">月冠军</a></li>					  
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock%}
+
+{% block content %}
+
+<div class="span9">
+          <div class="hero-unit">
+            {{item|pprint}}
+{{ item.creator}}---
+		{{ item.task_title}}
+		{{ item.create_time }}
+    {{ item.point }}
+
+		 
+		 
+
+</div>
+</div>
+
+
+
+
+{% endblock%}

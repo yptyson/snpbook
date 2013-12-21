@@ -1,0 +1,50 @@
+{% extends "base.html"%}
+{% load pagination_tags %} 
+{% block content %}
+
+<div>  
+	<div>
+	<p style="text-align:center;font-weight:bold;color:#0000FF;font-size: 200%">SNP 成员</p>
+	</div>
+
+</div>
+
+
+{% autopaginate members 1 %}
+{% for member in members %}
+
+<hr>
+<div  style="clear:both">
+	<div style="float:left;margin : 0px 30px 20px 20px;color:ffff00" >
+	<img style="width:150px;height:150px;" src="/media/{{ member.photo}}" alt="">
+	</div>
+	
+	
+	<div style="float:left;"><span class="badge badge-warning" >姓名:</span></div>
+	<div style="float:left">{{ member }}</div>	 
+	
+	<div style="float:left;"><span class="badge badge-warning" >昵称:</span></div>
+	<div >{{ member.nick_name }}</div>
+	
+	<div style="float:left;margin:5px 0px 0px 0px;"><span class="badge badge-warning" >家:</span></div>
+	<div >{{ member.name }}</div>
+	
+	<div style="float:left;margin:5px 0px 0px 0px;"><span class="badge badge-warning" >部门:</span></div>
+	<div style="margin:5px 0px 0px 0px;">{{ member.department }}</div>
+	
+	<div style="float:left;margin:5px 0px 0px 0px;"><span class="badge badge-warning" >描述:</span></div>
+	<div style="margin:5px 0px 0px 0px;"><span>{{ member.describe }}333333</span></div>
+	
+</div> 
+
+<br><br><br>
+{% endfor %}
+{% paginate %}
+
+
+
+
+
+
+
+{% endblock%}

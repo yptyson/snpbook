@@ -1,0 +1,42 @@
+{% extends "base.html"%}
+{% load pagination_tags %} 
+
+{% block list %}
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">图书借阅</li>              
+              <li class="active"><a href="/book/book_list/">图书</a></li>              
+              <li><a href="/book/show_return_books/">归还列表</a></li>
+			  <li><a href="/book/list_return_book/">归还历史</a></li>
+			  <li><a href="/book/create_book/">新书录入</a></li>					  
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock%}
+
+
+
+{% block content %}
+ <div class="span9">
+          <div class="hero-unit">
+<table class="table table-striped">
+	<tr><th>书名</th><th>作者</th><th>分享</th><th>&nbsp;&nbsp;借阅&nbsp;&nbsp;</th></tr>
+	{% autopaginate books 10 %}
+	{% for book in books %}	    
+		<tr>
+	    <!--<td>{# forloop.counter #}{{ book.id }}</td>-->
+	    <td>{{ book.name }} </td>
+		<td>{{ book.writer }}</td>				
+		<td>{% if book.share %}可分享{% else %}&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</td>		
+		<td> {% if  book.get_borrow_status %}<a href="/book/save_borrow?user_id=3&book_id={{book.id}}">我要借阅</a>{%else%}站票{% endif %} </td>
+		</tr>		
+	{% endfor %}  
+	
+</table>  
+{% paginate %}
+</div></div>
+
+{% endblock%}
