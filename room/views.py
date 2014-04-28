@@ -8,9 +8,6 @@ import datetime
 from datetime import timedelta
 
 
-
-
-
 from models import Room
 
 def get_days():
